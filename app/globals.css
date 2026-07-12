@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --shell-pad: clamp(1.25rem, 5vw, 4rem);
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f4f4f2;
+  color: #131313;
+  font-feature-settings: "ss01", "cv01";
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background: #ff5b29;
+  color: #131313;
+}
+
+/* Thin scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #131313;
+}
+::-webkit-scrollbar-thumb {
+  background: #2c2c2c;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff5b29;
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: var(--shell-pad);
+  }
+
+  /* Telemetry data chip — the recurring signature device */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono), monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(19, 19, 19, 0.14);
+    background: rgba(19, 19, 19, 0.03);
+    color: #57534e;
+    white-space: nowrap;
+  }
+
+  /* Chip on dark surfaces (hero, dark bands) */
+  .chip-dark {
+    border-color: rgba(244, 244, 242, 0.18);
+    background: rgba(244, 244, 242, 0.05);
+    color: #dadada;
+  }
+
+  .chip-signal {
+    border-color: rgba(255, 91, 41, 0.3);
+    background: rgba(255, 91, 41, 0.08);
+    color: #ff7a50;
+  }
+
+  /* Eyebrow label */
+  .eyebrow {
+    font-family: var(--font-mono), monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  /* Hazard stripe — road/fleet livery motif */
+  .hazard {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #ff5b29 0,
+      #ff5b29 12px,
+      #131313 12px,
+      #131313 24px
+    );
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Grain / grid overlay helpers */
+  .grid-lines {
+    background-image: linear-gradient(
+        to right,
+        rgba(244, 244, 242, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(244, 244, 242, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Focus visibility — quality floor */
+:focus-visible {
+  outline: 2px solid #ff5b29;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
