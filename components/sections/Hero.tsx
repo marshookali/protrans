@@ -1,14 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   motion,
   useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
-import { images } from "@/lib/images";
 
 const container = {
   hidden: {},
@@ -80,7 +78,7 @@ export function Hero() {
 
   return (
     <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-[#131313]">
-      {/* Background freight image — cinematic dusk haul, slow ken-burns + parallax */}
+      {/* Background freight video — cinematic dusk haul, slow ken-burns + parallax */}
       <motion.div
         className="absolute inset-0 -z-20"
         style={reduce ? undefined : { y: imageY, scale: imageScale }}
@@ -88,13 +86,16 @@ export function Hero() {
         animate={reduce ? undefined : { scale: 1 }}
         transition={{ duration: 9, ease: "easeOut" }}
       >
-        <Image
-          src="/image.png"
-          alt="Hero background"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[60%_center]"
+        <video
+          className="absolute inset-0 h-full w-full object-cover object-[60%_center]"
+          src="/protrans-bannar-video.mp4"
+          poster="/image.png"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden="true"
         />
       </motion.div>
 
