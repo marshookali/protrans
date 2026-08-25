@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { advantages } from "@/lib/site";
 import { images } from "@/lib/images";
-import { Reveal } from "@/components/motion/Reveal";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -18,95 +17,152 @@ const rowImages = [
   images.boxesMinimal, // Specialized Handling
 ];
 
+/** Diagonal arrow: points up-right when open, rotates to down-right when closed. */
+function DiagArrow({ open }: { open: boolean }) {
+  return (
+    <span
+      className={`flex h-9 w-9 shrink-0 items-center justify-center text-paper transition-transform duration-500 ease-smooth ${
+        open ? "" : "rotate-90"
+      } group-hover:translate-x-0.5 group-hover:-translate-y-0.5`}
+    >
+      <svg
+        className="h-6 w-6 sm:h-7 sm:w-7"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M7 17 17 7M9 7h8v8"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
+}
+
 /**
- * Advantages as a divided list. The image column is empty by default; hovering
- * a row pops in its supporting image, and leaving the list hides it again.
+ * Advantages as a one-open-at-a-time accordion beside a large rounded image.
+ * The image crossfades to the open row's photo; all frames stay mounted and
+ * preloaded so switching never waits on a fetch.
  */
 export function WhyRows() {
-  const [active, setActive] = useState<number | null>(null);
+  const [active, setActive] = useState(0);
   const reduce = useReducedMotion();
 
   return (
-    <section className="pb-24 sm:pb-32">
-      <div className="shell grid gap-14 lg:grid-cols-[minmax(0,340px)_1fr] xl:grid-cols-[minmax(0,320px)_minmax(0,1fr)_300px]">
-        {/* Heading */}
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          <Reveal>
-            <h2 className="font-display text-3xl font-600 leading-[1.06] tracking-tighter sm:text-4xl">
-              A partner that speaks FMCG.
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-grey-600">
-              We understand shelf-life, festival peaks, and border paperwork,
-              because that is the world we were built for.
-            </p>
-          </Reveal>
-        </div>
+    <section className="bg-[#101010] py-24 sm:py-32">
+      <div className="shell">
+        {/* Header */}
+        <motion.span
+          initial={reduce ? undefined : { opacity: 0, y: -16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15% 0px" }}
+          transition={{ duration: 0.6, ease }}
+          className="eyebrow block text-accent"
+        >
+          Why us
+        </motion.span>
+        <motion.h2
+          initial={reduce ? undefined : { opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15% 0px" }}
+          transition={{ duration: 0.8, delay: 0.1, ease }}
+          className="mt-5 max-w-[820px] font-display text-[clamp(2.2rem,4.6vw,3.6rem)] font-600 uppercase leading-[1.08] tracking-tighter text-paper"
+        >
+          A partner that speaks <span className="text-accent">FMCG.</span>
+        </motion.h2>
+        <motion.p
+          initial={reduce ? undefined : { opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-15% 0px" }}
+          transition={{ duration: 0.7, delay: 0.3, ease }}
+          className="mt-6 max-w-[600px] text-base leading-relaxed text-grey-400 sm:text-lg"
+        >
+          We understand shelf-life, festival peaks, and border paperwork,
+          because that is the world we were built for.
+        </motion.p>
 
-        {/* Rows */}
-        <ul className="border-t border-ink/10" onMouseLeave={() => setActive(null)}>
-          {advantages.map((adv, i) => (
-            <Reveal key={adv.title} as="li" delay={i * 0.05}>
+        {/* Two-column: image left, accordion right */}
+        <div className="mt-14 grid gap-10 lg:grid-cols-[45fr_55fr] lg:gap-16">
+          <motion.div
+            initial={reduce ? undefined : { opacity: 0, x: -60, rotate: -2 }}
+            whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+            viewport={{ once: true, margin: "-15% 0px" }}
+            transition={{ duration: 1, ease }}
+            className="group relative min-h-[300px] overflow-hidden rounded-[24px] sm:min-h-[400px] sm:rounded-[36px] lg:min-h-0"
+          >
+            {rowImages.map((img, i) => (
               <div
-                onMouseEnter={() => setActive(i)}
-                className="group flex items-start gap-6 border-b border-ink/10 py-7 transition-transform duration-500 ease-smooth hover:translate-x-1"
+                key={img.src}
+                aria-hidden={active !== i}
+                className={`absolute inset-0 transition-opacity duration-500 ease-smooth ${
+                  active === i ? "opacity-100" : "opacity-0"
+                }`}
               >
-                <span
-                  className={`mt-1 font-mono text-sm transition-colors duration-300 ${
-                    active === i ? "text-accent-deep" : "text-grey-500"
+                <Image
+                  src={img.src}
+                  alt={active === i ? img.alt : ""}
+                  fill
+                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  className="object-cover transition-transform duration-500 ease-smooth group-hover:scale-[1.02]"
+                />
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Accordion */}
+          <ul>
+            {advantages.map((adv, i) => {
+              const open = active === i;
+              const [first, ...rest] = adv.title.split(" ");
+              return (
+                <motion.li
+                  key={adv.title}
+                  initial={reduce ? undefined : { opacity: 0, x: 40 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-10% 0px" }}
+                  transition={{ duration: 0.6, delay: 0.15 * i, ease }}
+                  className={`border-b border-[#2A2A2A] transition-colors duration-300 hover:border-accent/50 ${
+                    i === 0 ? "border-t" : ""
                   }`}
                 >
-                  0{i + 1}
-                </span>
-                <div>
-                  <h3 className="font-display text-xl font-600 tracking-tight text-ink sm:text-2xl">
-                    {adv.title}
-                  </h3>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-grey-600">
-                    {adv.body}
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
-
-        {/* Hover-linked image card. All frames are rendered and preloaded, so
-            switching rows never waits on a network fetch. */}
-        <div className="hidden xl:block">
-          <div className="sticky top-32">
-            <div className="relative aspect-[4/5] w-full">
-              {rowImages.map((img, i) => {
-                const isActive = i === active;
-                return (
-                  <motion.div
-                    key={img.src}
-                    aria-hidden={!isActive}
-                    initial={false}
-                    animate={
-                      reduce
-                        ? { opacity: isActive ? 1 : 0 }
-                        : {
-                            opacity: isActive ? 1 : 0,
-                            scale: isActive ? 1 : 0.93,
-                            y: isActive ? 0 : 14,
-                          }
-                    }
-                    transition={{ duration: 0.45, ease }}
-                    className="absolute inset-0 overflow-hidden rounded-2xl shadow-[0_36px_70px_-40px_rgba(39,39,39,0.6)]"
-                    style={{ pointerEvents: "none" }}
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    onMouseEnter={() => setActive(i)}
+                    aria-expanded={open}
+                    className="group flex w-full items-center justify-between gap-6 py-7 text-left transition-transform duration-300 ease-smooth hover:translate-x-2 sm:py-8"
                   >
-                    <Image
-                      src={img.src}
-                      alt={isActive ? img.alt : ""}
-                      fill
-                      sizes="300px"
-                      className="object-cover"
-                    />
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
+                    <h3 className="font-display text-xl font-600 tracking-tight sm:text-[1.65rem]">
+                      <span className="text-accent">{first}</span>
+                      {rest.length > 0 && (
+                        <span className="text-paper"> {rest.join(" ")}</span>
+                      )}
+                    </h3>
+                    <DiagArrow open={open} />
+                  </button>
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-500 ease-smooth ${
+                      open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p
+                        className={`max-w-[520px] pb-7 text-sm leading-relaxed text-grey-400 transition-opacity duration-300 sm:pb-8 sm:text-base ${
+                          open ? "opacity-100" : "opacity-0"
+                        }`}
+                      >
+                        {adv.body}
+                      </p>
+                    </div>
+                  </div>
+                </motion.li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>

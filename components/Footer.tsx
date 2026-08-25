@@ -5,7 +5,7 @@ const footerServices = services.slice(0, 4);
 
 export function Footer() {
   return (
-    <footer className="bg-ink text-paper">
+    <footer className="bg-[#101010] text-paper">
       {/* Extra top padding leaves room for the home page's overlapping CTA strip. */}
       <div className="shell pb-10 pt-32 sm:pt-36">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">

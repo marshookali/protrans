@@ -58,7 +58,7 @@ export function HomeHero() {
       <div className="mx-auto max-w-shell">
         {/* Hero module — inset rounded image panel */}
         <div className="relative">
-          <div className="relative min-h-[520px] overflow-hidden rounded-2xl bg-ink sm:min-h-[580px] lg:rounded-tr-none">
+          <div className="relative min-h-[520px] overflow-hidden rounded-2xl bg-ink sm:min-h-[580px]">
             <motion.div
               className="absolute inset-0"
               initial={reduce ? { scale: 1 } : { scale: 1.06 }}
@@ -129,20 +129,6 @@ export function HomeHero() {
               </motion.div>
             </div>
 
-            {/* Curved notch — top-right corner cutout (desktop). Kept as a pure
-                shape: page background with a rounded inner corner and two
-                fillets curving the module's edges into it. */}
-            <div className="absolute right-0 top-0 z-10 hidden h-[120px] w-[320px] rounded-bl-3xl bg-paper lg:block">
-              <span
-                aria-hidden
-                className="absolute -left-6 top-0 h-6 w-6 bg-[radial-gradient(circle_24px_at_0_100%,transparent_23px,#FFFCFC_24px)]"
-              />
-              <span
-                aria-hidden
-                className="absolute -bottom-6 right-0 h-6 w-6 bg-[radial-gradient(circle_24px_at_0_100%,transparent_23px,#FFFCFC_24px)]"
-              />
-            </div>
-
             {/* Trust chips — inset into a notched cutout at the module's
                 bottom-left (desktop). The notch is page-background with a
                 rounded inner corner; two radial-gradient fillets curve the
@@ -163,7 +149,7 @@ export function HomeHero() {
                     initial={reduce ? undefined : { opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.65, delay: 0.85 + i * 0.12, ease }}
-                    className="flex w-[190px] flex-col rounded-2xl bg-ink p-5 text-paper"
+                    className="flex w-[190px] flex-col rounded-2xl bg-[#101010] p-5 text-paper"
                   >
                     <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-paper/[0.08] text-accent">
                       <svg
@@ -196,7 +182,7 @@ export function HomeHero() {
                 initial={reduce ? undefined : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.65, delay: 0.85 + i * 0.12, ease }}
-                className="flex items-start gap-4 rounded-2xl bg-ink p-5 text-paper"
+                className="flex items-start gap-4 rounded-2xl bg-[#101010] p-5 text-paper"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-paper/[0.08] text-accent">
                   <svg

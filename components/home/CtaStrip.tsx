@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { clients } from "@/lib/site";
 import { Reveal } from "@/components/motion/Reveal";
 
 /**
@@ -10,23 +9,6 @@ export function CtaStrip() {
   return (
     <section className="relative z-10 -mb-16">
       <div className="shell">
-        {/* Client line — restrained text names only */}
-        <Reveal>
-          <div className="mb-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-3">
-            <span className="text-xs uppercase tracking-[0.18em] text-grey-500">
-              Trusted by
-            </span>
-            {clients.map((c) => (
-              <span
-                key={c.name}
-                className="font-display text-sm font-600 tracking-tight text-ink/70"
-              >
-                {c.name}
-              </span>
-            ))}
-          </div>
-        </Reveal>
-
         {/* Overlapping CTA bar */}
         <Reveal delay={0.08}>
           <div className="flex flex-col items-start justify-between gap-7 rounded-2xl border border-ink/10 bg-paper px-8 py-10 shadow-[0_40px_80px_-45px_rgba(39,39,39,0.55)] sm:flex-row sm:items-center sm:px-12">

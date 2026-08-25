@@ -5,6 +5,7 @@ import { ColdChainStory } from "@/components/home/ColdChainStory";
 import { TrustedPartners } from "@/components/home/TrustedPartners";
 import { CoreFour } from "@/components/home/CoreFour";
 import { WhyRows } from "@/components/home/WhyRows";
+import { ContactSection } from "@/components/home/ContactSection";
 import { CtaStrip } from "@/components/home/CtaStrip";
 
 export default function HomePage() {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <TrustedPartners />
       <CoreFour />
       <WhyRows />
+      <ContactSection />
       <CtaStrip />
     </>
   );

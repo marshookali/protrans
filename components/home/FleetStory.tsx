@@ -17,7 +17,7 @@ export function FleetStory() {
         {/* Overlapping card with protruding cutout (desktop) */}
         <Reveal className="absolute -top-32 left-0 z-10 hidden w-[380px] lg:block xl:w-[500px]">
           <div className="relative aspect-[3/4]">
-            <div className="absolute bottom-[3%] -left-[18%] -right-[77%] -top-[35%]">
+            <div className="absolute bottom-[3%] -left-[26%] -right-[69%] -top-[35%]">
               <Image
                 src="/images/image-Photoroom (8).png"
                 alt="Container reach stacker lifting equipment"
@@ -30,7 +30,7 @@ export function FleetStory() {
         </Reveal>
 
         {/* Dark band */}
-        <div className="rounded-2xl bg-ink py-16 text-paper sm:py-20 lg:rounded-none lg:pb-14">
+        <div className="rounded-2xl bg-[#101010] py-16 text-paper sm:py-20 lg:rounded-none lg:pb-14">
           <div className="px-7 sm:px-12 lg:pl-[52%] lg:pr-16 min-[1400px]:pl-[46%]">
             {/* Mobile banner — spans the band edge-to-edge, cropped to the
                 depot's trucks-and-crates band */}

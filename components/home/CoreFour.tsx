@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import {
   cubicBezier,
   motion,
@@ -34,54 +35,83 @@ function CoreCard({
   body: string;
   reduce: boolean;
 }) {
-  const start = index * 0.25;
-  const y = useTransform(progress, [start, start + 0.25], [110, 0], {
+  const start = index * 0.21;
+  const y = useTransform(progress, [start, start + 0.24], [110, 0], {
     ease: easeSmooth,
   });
-  const opacity = useTransform(progress, [start, start + 0.18], [0, 1]);
+  const opacity = useTransform(progress, [start, start + 0.16], [0, 1]);
 
   return (
-    <div className={index % 2 === 1 ? "xl:translate-y-16" : ""}>
-      <motion.div style={reduce ? undefined : { y, opacity }} className="h-full">
-        <article className="flex h-full flex-col rounded-2xl bg-paper-soft p-7 sm:min-h-[260px] transition-all duration-500 ease-smooth hover:-translate-y-1 hover:shadow-[0_28px_55px_-38px_rgba(39,39,39,0.4)]">
-          <span className="font-mono text-xs text-grey-500">0{index + 1}</span>
-          <h3 className="mt-5 font-display text-lg font-600 leading-snug tracking-tight text-ink">
-            {title}
-          </h3>
-          <p className="mt-3 text-sm leading-relaxed text-grey-600">{body}</p>
-        </article>
-      </motion.div>
-    </div>
+    <motion.div style={reduce ? undefined : { y, opacity }} className="h-full">
+      <article className="relative flex h-full min-h-[320px] flex-col rounded-[24px] bg-[#F2F2F2] p-8 pb-24 transition-all duration-500 ease-smooth hover:-translate-y-1 hover:shadow-[0_28px_55px_-30px_rgba(0,0,0,0.65)] sm:p-9 sm:pb-24">
+        <h3 className="max-w-[95%] font-display text-xl font-600 uppercase leading-tight tracking-tight text-[#1A1A1A]">
+          {title}
+        </h3>
+        <p className="mt-4 text-sm leading-relaxed text-[#4A4A4A]">{body}</p>
+        <Link
+          href="/about"
+          className="mt-auto inline-flex w-fit items-center gap-1.5 pt-6 text-xs font-semibold uppercase tracking-[0.1em] text-accent-deep transition-colors duration-300 hover:text-ink"
+        >
+          Read more
+          <svg
+            className="h-3.5 w-3.5"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 8h9M8 4l4 4-4 4"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </Link>
+
+        {/* Concave notch carved from the bottom-right corner: a section-bg
+            square with a rounded inner corner, plus two fillets curving the
+            card's edges into it, and the pagination dot sitting in the gap. */}
+        <div
+          aria-hidden
+          className="absolute bottom-0 right-0 h-[72px] w-[108px] rounded-tl-[28px] bg-[#101010]"
+        >
+          <span className="absolute -top-6 right-0 h-6 w-6 bg-[radial-gradient(circle_24px_at_0_0,transparent_23px,#101010_24px)]" />
+          <span className="absolute -left-6 bottom-0 h-6 w-6 bg-[radial-gradient(circle_24px_at_0_0,transparent_23px,#101010_24px)]" />
+          <span className="absolute bottom-2.5 right-4 h-3 w-3 rounded-full bg-white" />
+        </div>
+      </article>
+    </motion.div>
   );
 }
 
-/** The four company values as a staggered card row (odd cards sit higher). */
+/** The four company values as an aligned row of notched cards. */
 export function CoreFour() {
   const reduce = useReducedMotion();
   const gridRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: gridRef,
-    // Ends later than center-center so the rise plays out over a longer
-    // stretch of scroll.
-    offset: ["start end", "center 0.35"],
+    // Ends at mid-viewport so every card is settled before the section
+    // scrolls on into the next one.
+    offset: ["start end", "center 0.5"],
   });
   // A soft spring trails the raw scroll position, so the cards glide into
   // place instead of tracking the wheel one-to-one.
   const progress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 22,
+    stiffness: 90,
+    damping: 24,
     mass: 1,
   });
 
   return (
-    <section className="py-24 sm:py-32">
+    <section className="bg-[#101010] py-24 sm:py-32">
       <div className="shell">
         <Reveal>
           <div className="mx-auto max-w-xl text-center">
-            <h2 className="font-display text-3xl font-600 leading-[1.06] tracking-tighter sm:text-4xl md:text-[2.8rem]">
+            <h2 className="font-display text-3xl font-600 leading-[1.06] tracking-tighter text-paper sm:text-4xl md:text-[2.8rem]">
               The Core Four.
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-grey-600 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-grey-400 sm:text-lg">
               The principles behind every dispatch we run.
             </p>
           </div>
@@ -89,7 +119,7 @@ export function CoreFour() {
 
         <div
           ref={gridRef}
-          className="mt-14 grid gap-5 sm:grid-cols-2 xl:grid-cols-4 xl:pb-16"
+          className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-4"
         >
           {coreValues.map((value, i) => (
             <CoreCard

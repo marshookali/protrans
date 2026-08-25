@@ -80,7 +80,7 @@ export function TrustedPartners() {
   const [flipped, setFlipped] = useState(false);
 
   useEffect(() => {
-    const id = setInterval(() => setFlipped((f) => !f), 2000);
+    const id = setInterval(() => setFlipped((f) => !f), 5000);
     return () => clearInterval(id);
   }, []);
 
