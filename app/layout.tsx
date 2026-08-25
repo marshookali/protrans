@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
-const archivo = Archivo({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-archivo",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -50,8 +57,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${jetbrains.variable}`}>
-      <body className="min-h-screen bg-asphalt font-sans text-paper antialiased">
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${manrope.variable} ${jetbrains.variable}`}
+    >
+      <body className="min-h-screen bg-paper font-sans text-ink antialiased">
         <Header />
         <main>{children}</main>
         <Footer />

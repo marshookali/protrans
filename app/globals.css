@@ -13,35 +13,27 @@
 
 html {
   scroll-behavior: smooth;
+  /* Firefox */
+  scrollbar-width: none;
 }
 
 body {
-  background: #f4f4f2;
-  color: #131313;
-  font-feature-settings: "ss01", "cv01";
+  background: #fffcfc;
+  color: #272727;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 /* Selection */
 ::selection {
-  background: #ff5b29;
-  color: #131313;
+  background: #f28c28;
+  color: #272727;
 }
 
-/* Thin scrollbar */
+/* Hidden scrollbars — scrolling itself stays untouched. */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #131313;
-}
-::-webkit-scrollbar-thumb {
-  background: #2c2c2c;
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #ff5b29;
+  width: 0;
+  height: 0;
 }
 
 @layer components {
@@ -52,7 +44,7 @@ body {
     padding-inline: var(--shell-pad);
   }
 
-  /* Telemetry data chip — the recurring signature device */
+  /* Data chip — used on inner pages */
   .chip {
     display: inline-flex;
     align-items: center;
@@ -63,23 +55,22 @@ body {
     text-transform: uppercase;
     padding: 0.4rem 0.7rem;
     border-radius: 999px;
-    border: 1px solid rgba(19, 19, 19, 0.14);
-    background: rgba(19, 19, 19, 0.03);
-    color: #57534e;
+    border: 1px solid rgba(39, 39, 39, 0.14);
+    background: rgba(39, 39, 39, 0.03);
+    color: #6b6b6b;
     white-space: nowrap;
   }
 
-  /* Chip on dark surfaces (hero, dark bands) */
   .chip-dark {
-    border-color: rgba(244, 244, 242, 0.18);
-    background: rgba(244, 244, 242, 0.05);
-    color: #dadada;
+    border-color: rgba(255, 252, 252, 0.18);
+    background: rgba(255, 252, 252, 0.05);
+    color: #d1d1d1;
   }
 
   .chip-signal {
-    border-color: rgba(255, 91, 41, 0.3);
-    background: rgba(255, 91, 41, 0.08);
-    color: #ff7a50;
+    border-color: rgba(242, 140, 40, 0.35);
+    background: rgba(242, 140, 40, 0.08);
+    color: #c2660b;
   }
 
   /* Eyebrow label */
@@ -90,14 +81,14 @@ body {
     text-transform: uppercase;
   }
 
-  /* Hazard stripe — road/fleet livery motif */
+  /* Hazard stripe — legacy motif, inner pages only */
   .hazard {
     background-image: repeating-linear-gradient(
       -45deg,
-      #ff5b29 0,
-      #ff5b29 12px,
-      #131313 12px,
-      #131313 24px
+      #f28c28 0,
+      #f28c28 12px,
+      #272727 12px,
+      #272727 24px
     );
   }
 }
@@ -109,14 +100,14 @@ body {
   .text-pretty {
     text-wrap: pretty;
   }
-  /* Grain / grid overlay helpers */
+  /* Legacy grid overlay — inner pages only */
   .grid-lines {
     background-image: linear-gradient(
         to right,
-        rgba(244, 244, 242, 0.05) 1px,
+        rgba(255, 252, 252, 0.05) 1px,
         transparent 1px
       ),
-      linear-gradient(to bottom, rgba(244, 244, 242, 0.05) 1px, transparent 1px);
+      linear-gradient(to bottom, rgba(255, 252, 252, 0.05) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 }
@@ -137,7 +128,7 @@ body {
 
 /* Focus visibility — quality floor */
 :focus-visible {
-  outline: 2px solid #ff5b29;
+  outline: 2px solid #c2660b;
   outline-offset: 3px;
   border-radius: 4px;
 }

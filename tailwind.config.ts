@@ -8,26 +8,39 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Base surfaces — neutral black/white identity (no green undertone)
-        asphalt: {
-          DEFAULT: "#131313", // near-black base
-          soft: "#1B1B1B", // raised surface / cards
-          line: "#2C2C2C", // hairline dividers on dark
+        // ── Core palette ─────────────────────────────────────────────
+        ink: {
+          DEFAULT: "#272727", // primary dark
+          800: "#494949",
+        },
+        grey: {
+          600: "#6B6B6B",
+          500: "#8D8D8D",
+          400: "#AFAFAF",
+          300: "#D1D1D1",
         },
         paper: {
-          DEFAULT: "#F4F4F2", // neutral off-white
-          soft: "#E8E8E6",
-          line: "#D6D6D4",
+          DEFAULT: "#FFFCFC", // warm white
+          soft: "#F6F2F2",
+          line: "#E9E4E4",
         },
-        ink: "#131313",
-        // Accents
+        // Single accent — CTAs, active states, small highlights only.
+        accent: {
+          DEFAULT: "#F28C28",
+          deep: "#C2660B",
+          soft: "#FDF0E0",
+        },
+        // ── Legacy aliases (inner pages still reference these) ──────
+        asphalt: {
+          DEFAULT: "#272727",
+          soft: "#313131",
+          line: "#454545",
+        },
         signal: {
-          DEFAULT: "#FF5B29", // signal orange — the single brand accent
-          soft: "#FF7A50",
-          deep: "#E23F10",
+          DEFAULT: "#F28C28",
+          soft: "#F5A75C",
+          deep: "#C2660B",
         },
-        // Secondary "accent" collapsed to a monochrome steel-gray so the whole
-        // palette stays black/white + orange. Every `cold` class now reads neutral.
         cold: {
           DEFAULT: "#B4B4B4",
           soft: "#DADADA",
@@ -35,8 +48,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ["var(--font-archivo)", "system-ui", "sans-serif"],
-        sans: ["var(--font-archivo)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       letterSpacing: {
@@ -55,18 +68,10 @@ const config: Config = {
         shell: "1320px",
       },
       transitionTimingFunction: {
-        // premium easing curves
         smooth: "cubic-bezier(0.22, 1, 0.36, 1)",
         entrance: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
       keyframes: {
-        "route-dash": {
-          to: { strokeDashoffset: "0" },
-        },
-        "marker-run": {
-          "0%": { offsetDistance: "0%" },
-          "100%": { offsetDistance: "100%" },
-        },
         "pulse-ring": {
           "0%": { transform: "scale(0.6)", opacity: "0.8" },
           "100%": { transform: "scale(2.2)", opacity: "0" },

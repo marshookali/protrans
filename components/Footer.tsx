@@ -1,51 +1,59 @@
 import Link from "next/link";
-import { company, nav } from "@/lib/site";
-import { Logo } from "./Logo";
+import { company, nav, services } from "@/lib/site";
+
+const footerServices = services.slice(0, 4);
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-paper-line bg-paper">
-      {/* hazard stripe top edge — fleet livery motif */}
-      <div className="hazard h-1.5 w-full opacity-90" />
-
-      <div className="shell py-16 sm:py-20">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="bg-ink text-paper">
+      {/* Extra top padding leaves room for the home page's overlapping CTA strip. */}
+      <div className="shell pb-10 pt-32 sm:pt-36">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           {/* Brand */}
           <div>
-            <Link href="/" className="flex items-center gap-3">
-              <Logo className="h-9 w-9" />
-              <span className="flex flex-col leading-none">
-                <span className="font-display text-lg font-800 uppercase tracking-tight text-ink">
-                  Pro Trans
-                </span>
-                <span className="font-mono text-[0.58rem] uppercase tracking-[0.24em] text-signal">
-                  Logistics LLP
-                </span>
-              </span>
+            <Link href="/" className="inline-flex" aria-label="PRO TRANS Logistics home">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.png"
+                alt="PRO TRANS Logistics LLP"
+                className="h-10 w-auto rounded-[4px]"
+              />
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink/55">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-grey-400">
               Technology-driven FMCG transportation across South India with
               Pan-India connectivity. Built on a promise of speed, safety, and
               reliability.
             </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <span className="chip chip-signal">EST. {company.founded}</span>
-              <span className="chip">FMCG SPECIALIST</span>
-            </div>
           </div>
 
           {/* Explore */}
           <div>
-            <h3 className="eyebrow text-ink/40">Explore</h3>
+            <h3 className="font-display text-sm font-600 text-paper">Explore</h3>
             <ul className="mt-5 space-y-3">
               {nav.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="group inline-flex items-center gap-2 text-sm text-ink/70 transition-colors hover:text-signal"
+                    className="text-sm text-grey-400 transition-colors duration-300 hover:text-accent"
                   >
-                    <span className="h-px w-3 bg-paper-line transition-all duration-300 group-hover:w-5 group-hover:bg-signal" />
                     {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services */}
+          <div>
+            <h3 className="font-display text-sm font-600 text-paper">Services</h3>
+            <ul className="mt-5 space-y-3">
+              {footerServices.map((s) => (
+                <li key={s.id}>
+                  <Link
+                    href="/services"
+                    className="text-sm text-grey-400 transition-colors duration-300 hover:text-accent"
+                  >
+                    {s.title}
                   </Link>
                 </li>
               ))}
@@ -54,48 +62,41 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="eyebrow text-ink/40">Reach Us</h3>
-            <ul className="mt-5 space-y-4 text-sm">
+            <h3 className="font-display text-sm font-600 text-paper">Reach us</h3>
+            <ul className="mt-5 space-y-3 text-sm">
+              {company.phones.mobile.map((p) => (
+                <li key={p}>
+                  <a
+                    href={`tel:+91${p}`}
+                    className="text-grey-400 transition-colors duration-300 hover:text-accent"
+                  >
+                    +91 {p}
+                  </a>
+                </li>
+              ))}
               <li>
-                <div className="font-mono text-[0.6rem] uppercase tracking-widest text-ink/35">
-                  Mobile
-                </div>
-                <div className="mt-1 flex flex-col gap-0.5">
-                  {company.phones.mobile.map((p) => (
-                    <a
-                      key={p}
-                      href={`tel:+91${p}`}
-                      className="text-ink/75 transition-colors hover:text-signal"
-                    >
-                      +91 {p}
-                    </a>
-                  ))}
-                </div>
-              </li>
-              <li>
-                <div className="font-mono text-[0.6rem] uppercase tracking-widest text-ink/35">
-                  Email
-                </div>
                 <a
                   href={`mailto:${company.email}`}
-                  className="mt-1 block break-all text-ink/75 transition-colors hover:text-signal"
+                  className="break-all text-grey-400 transition-colors duration-300 hover:text-accent"
                 >
                   {company.email}
                 </a>
+              </li>
+              <li className="pt-1 text-xs leading-relaxed text-grey-500">
+                {company.hq.line},
+                <br />
+                {company.hq.area}, PIN {company.hq.pin}
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Address strip */}
-        <div className="mt-14 flex flex-col gap-4 border-t border-paper-line pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-md text-xs leading-relaxed text-ink/45">
-            {company.hq.line}, {company.hq.area}, PIN: {company.hq.pin}
+        {/* Bottom bar */}
+        <div className="mt-14 flex flex-col gap-3 border-t border-paper/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-grey-500">
+            © {company.founded}–{new Date().getFullYear()} {company.name}
           </p>
-          <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-ink/35">
-            © {company.founded}–{new Date().getFullYear()} {company.shortName}{" "}
-            Logistics LLP
-          </p>
+          <p className="text-xs text-grey-500">{company.tagline}</p>
         </div>
       </div>
     </footer>
