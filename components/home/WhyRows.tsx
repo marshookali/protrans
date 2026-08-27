@@ -21,12 +21,12 @@ const rowImages = [
 function DiagArrow({ open }: { open: boolean }) {
   return (
     <span
-      className={`flex h-9 w-9 shrink-0 items-center justify-center text-paper transition-transform duration-500 ease-smooth ${
+      className={`flex h-8 w-8 shrink-0 items-center justify-center text-paper transition-transform duration-500 ease-smooth ${
         open ? "" : "rotate-90"
       } group-hover:translate-x-0.5 group-hover:-translate-y-0.5`}
     >
       <svg
-        className="h-6 w-6 sm:h-7 sm:w-7"
+        className="h-5 w-5 sm:h-6 sm:w-6"
         viewBox="0 0 24 24"
         fill="none"
         aria-hidden="true"
@@ -53,7 +53,7 @@ export function WhyRows() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="bg-[#101010] py-24 sm:py-32">
+    <section className="bg-[#101010] py-20 sm:py-24">
       <div className="shell">
         {/* Header */}
         <motion.span
@@ -70,7 +70,7 @@ export function WhyRows() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 0.8, delay: 0.1, ease }}
-          className="mt-5 max-w-[820px] font-display text-[clamp(2.2rem,4.6vw,3.6rem)] font-600 uppercase leading-[1.08] tracking-tighter text-paper"
+          className="mt-5 max-w-[720px] font-display text-[clamp(2rem,3.8vw,3rem)] font-600 uppercase leading-[1.08] tracking-tighter text-paper"
         >
           A partner that speaks <span className="text-accent">FMCG.</span>
         </motion.h2>
@@ -79,20 +79,20 @@ export function WhyRows() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-15% 0px" }}
           transition={{ duration: 0.7, delay: 0.3, ease }}
-          className="mt-6 max-w-[600px] text-base leading-relaxed text-grey-400 sm:text-lg"
+          className="mt-5 max-w-[560px] text-base leading-relaxed text-grey-400"
         >
           We understand shelf-life, festival peaks, and border paperwork,
           because that is the world we were built for.
         </motion.p>
 
         {/* Two-column: image left, accordion right */}
-        <div className="mt-14 grid gap-10 lg:grid-cols-[45fr_55fr] lg:gap-16">
+        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:items-center lg:gap-14">
           <motion.div
             initial={reduce ? undefined : { opacity: 0, x: -60, rotate: -2 }}
             whileInView={{ opacity: 1, x: 0, rotate: 0 }}
             viewport={{ once: true, margin: "-15% 0px" }}
             transition={{ duration: 1, ease }}
-            className="group relative min-h-[300px] overflow-hidden rounded-[24px] sm:min-h-[400px] sm:rounded-[36px] lg:min-h-0"
+            className="group relative aspect-[4/3] overflow-hidden rounded-[24px] sm:aspect-[16/10] sm:rounded-[28px] lg:aspect-[4/5] lg:max-h-[440px]"
           >
             {rowImages.map((img, i) => (
               <div
@@ -106,7 +106,7 @@ export function WhyRows() {
                   src={img.src}
                   alt={active === i ? img.alt : ""}
                   fill
-                  sizes="(min-width: 1024px) 45vw, 100vw"
+                  sizes="(min-width: 1024px) 34vw, 100vw"
                   className="object-cover transition-transform duration-500 ease-smooth group-hover:scale-[1.02]"
                 />
               </div>
@@ -134,9 +134,9 @@ export function WhyRows() {
                     onClick={() => setActive(i)}
                     onMouseEnter={() => setActive(i)}
                     aria-expanded={open}
-                    className="group flex w-full items-center justify-between gap-6 py-7 text-left transition-transform duration-300 ease-smooth hover:translate-x-2 sm:py-8"
+                    className="group flex w-full items-center justify-between gap-6 py-5 text-left transition-transform duration-300 ease-smooth hover:translate-x-2 sm:py-6"
                   >
-                    <h3 className="font-display text-xl font-600 tracking-tight sm:text-[1.65rem]">
+                    <h3 className="font-display text-lg font-600 tracking-tight sm:text-2xl">
                       <span className="text-accent">{first}</span>
                       {rest.length > 0 && (
                         <span className="text-paper"> {rest.join(" ")}</span>
@@ -151,7 +151,7 @@ export function WhyRows() {
                   >
                     <div className="overflow-hidden">
                       <p
-                        className={`max-w-[520px] pb-7 text-sm leading-relaxed text-grey-400 transition-opacity duration-300 sm:pb-8 sm:text-base ${
+                        className={`max-w-[520px] pb-5 text-sm leading-relaxed text-grey-400 transition-opacity duration-300 sm:pb-6 sm:text-[15px] ${
                           open ? "opacity-100" : "opacity-0"
                         }`}
                       >
