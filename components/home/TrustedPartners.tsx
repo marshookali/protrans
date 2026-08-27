@@ -12,16 +12,21 @@ const pairs = [
   {
     category: "Retail",
     name: "NESTO Hypermarkets",
+    // Official asset is a white knockout; inverted to read on the paper face.
+    logo: { src: "/logos/nesto.svg", className: "h-12 invert sm:h-14" },
     text: "Managing high-volume retail logistics for one of the fastest-growing retail chains.",
   },
   {
     category: "Craze Biscuits",
     name: "AZCCO Global Venture",
+    // Official asset is white-on-transparent; inverted to read on the paper face.
+    logo: { src: "/logos/azcco.png", className: "h-9 invert sm:h-11" },
     text: "Timely distribution of confectionery products across the network.",
   },
   {
     category: "Dairy Federation",
     name: "MILMA",
+    logo: { src: "/logos/milma.svg", className: "h-[72px] sm:h-[88px]" },
     text: "Trusted handling of sensitive dairy products requiring strict timeline adherence.",
   },
 ];
@@ -43,10 +48,12 @@ const cells = [
 function PartnerFace({
   category,
   name,
+  logo,
   back,
 }: {
   category: string;
   name: string;
+  logo: { src: string; className: string };
   back?: boolean;
 }) {
   return (
@@ -56,9 +63,12 @@ function PartnerFace({
       }`}
     >
       <span className="text-xs text-grey-600 sm:text-sm">{category}</span>
-      <span className="mt-1.5 font-display text-lg font-600 tracking-tight sm:text-2xl">
-        {name}
-      </span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={logo.src}
+        alt={name}
+        className={`mt-3 w-auto max-w-full self-start object-contain object-left ${logo.className}`}
+      />
     </div>
   );
 }
@@ -121,7 +131,7 @@ export function TrustedPartners() {
                 >
                   {cell.partnerFirst ? (
                     <>
-                      <PartnerFace category={pair.category} name={pair.name} />
+                      <PartnerFace category={pair.category} name={pair.name} logo={pair.logo} />
                       <TextFace text={pair.text} back />
                     </>
                   ) : (
@@ -130,6 +140,7 @@ export function TrustedPartners() {
                       <PartnerFace
                         category={pair.category}
                         name={pair.name}
+                        logo={pair.logo}
                         back
                       />
                     </>
